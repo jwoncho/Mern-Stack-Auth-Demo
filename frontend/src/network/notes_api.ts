@@ -3,11 +3,14 @@ import { User } from "../models/user";
 
 async function fetchData(input: RequestInfo, init?: RequestInit) {
     const response = await fetch(input, init);
+    console.log(response)
+
     if (response.ok) {
         return response;
     } else {
         const errorBody = await response.json();
         const errorMessage = errorBody.error;
+
         throw Error(errorMessage);
     }
 }
@@ -28,7 +31,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
     { 
         method: "POST",
         headers: {
-            "Content_Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(credentials),
     });
@@ -41,14 +44,19 @@ export interface LoginCredentials {
 }
 
 export async function login(credentials: LoginCredentials): Promise<User> {
-    const response = await fetchData("/api/users/login",
+    //console.log("here in login")
+    
+    // this function is incorrect
+    const response = await fetchData("http://localhost:3000/api/users/login",
     { 
         method: "POST",
         headers: {
-            "Content_Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(credentials),
     });
+    // console.log(response.json());
+    // console.log("here in login2")
     return response.json();
 }
 

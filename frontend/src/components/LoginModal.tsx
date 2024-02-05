@@ -17,10 +17,13 @@ const LoginModal = ({onDismiss, onLoginSuccessful}: LoginModalProps) => {
 
     async function onSubmit(credentials: LoginCredentials) {
         try {
-            const user = await NotesApi.login(credentials);
+            console.log(credentials)
+            const user = await NotesApi.login(credentials); // this is the issue -eric
+            //console.log("here")
             onLoginSuccessful(user);
         } catch (error) {
             alert(error);
+            //console.log(credentials)
             console.error(error);
         }
     }

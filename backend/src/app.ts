@@ -27,6 +27,7 @@ app.use(session({
     }),
 }));
 
+//console.log(env.MONGO_CONNECTION_STRING)
 app.use("/api/users", userRoutes)
 app.use("/api/notes", notesRoutes);
 

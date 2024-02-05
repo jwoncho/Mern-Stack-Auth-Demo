@@ -25,9 +25,12 @@ interface SignUpBody {
 }
 
 export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = async (req, res, next) => {
-    const username = req.body.username;
-    const email = req.body.email;
-    const passwordRaw = req.body.password
+    // const username = req.body.username;
+    // const email = req.body.email;
+    // const passwordRaw = req.body.password
+
+    const { body } = req;
+    const { username, email, password:passwordRaw } = body;
 
     try {
         if(!username || !email || !passwordRaw) {
@@ -58,6 +61,7 @@ export const signUp: RequestHandler<unknown, unknown, SignUpBody, unknown> = asy
 
         res.status(201).json(newUser)
     } catch(error) {
+        console.error("Signup error: ", error)
         next(error);
     }
 };
@@ -70,7 +74,8 @@ interface LoginBody {
 export const login: RequestHandler<unknown, unknown, LoginBody, unknown> = async (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
-
+    
+    console.log(req)
     try {
         if (!username || !password) {
             throw createHttpError(400, "Parameters missing");
@@ -91,6 +96,7 @@ export const login: RequestHandler<unknown, unknown, LoginBody, unknown> = async
         req.session.userId = user._id;
         res.status(201).json(user);
     } catch (error) {
+        console.error("Login Error", error)
         next(error)
     }
 }

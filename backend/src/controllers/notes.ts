@@ -28,12 +28,13 @@ export const getNote: RequestHandler = async (req, res, next) => {
 
         res.status(200).json(note);
     } catch (error) {
+        console.error("Getting note failed", error);
         next(error);
     }
 };
 
 interface CreateNoteBody {
-    title?: string,
+    title: string,
     text?: string,
 }
 
@@ -47,12 +48,13 @@ export const createNote: RequestHandler<unknown, unknown, CreateNoteBody, unknow
         }
 
         const newNote = await NoteModel.create({
-            title: title,
-            text: text,
+            title,
+            text,
         });
 
         res.status(201).json(newNote);
     } catch (error) {
+        console.error("Creating note error", error)
         next(error);
     }
 };
